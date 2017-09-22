@@ -13,7 +13,6 @@ def loadData(filename):
 	    data.append(im.reshape(2500,))
 	    labels.append(line.strip().split()[1])
 	data, labels = np.array(data, dtype=float), np.array(labels, dtype=int)
-	print (data.shape, labels.shape)
 	return data, labels
 
 def displayTrainSample(data):
@@ -30,38 +29,106 @@ def displayTestSample(data):
 
 def calculateAverageFace():
 	mu = np.mean(train_data, axis=0)
-	print (mu)
 	plt.imshow(mu.reshape(50,50), cmap = cm.Greys_r)
 	plt.title('Average face $\mu$')
 	plt.savefig('average_image.png')
+	plt.close()
 	return mu
 
-def displayAdjustedData(mu):
-	_train_data = train_data - mu
-	_test_data = test_data - mu
+def displayAdjustedData(train_data, test_data, _train_data, _test_data):
 	plt.figure(figsize=(6, 6))
 	plt.subplot(2,2,1)
 	plt.imshow(train_data[10, :].reshape(50,50), cmap = cm.Greys_r)
-	plt.title("Train sample")
+	plt.title('Train Sample')
 
 	plt.subplot(2,2,2)
-	plt.imshow(_tr[10,:].reshape(50,50), cmap = cm.Greys_r)
-	plt.title("Train sample - $\mu$")
+	plt.imshow(_train_data[10,:].reshape(50,50), cmap = cm.Greys_r)
+	plt.title('Train Sample - $\mu$')
 
 	plt.subplot(2,2,3)
 	plt.imshow(test_data[10,:].reshape(50,50), cmap = cm.Greys_r)
-	plt.title("Test sample")
+	plt.title('Test Sample')
 
 	plt.subplot(2,2,4)
-	plt.imshow(_te[10,:].reshape(50,50), cmap = cm.Greys_r)
-	plt.title("Test sample - $\mu$")
+	plt.imshow(_test_data[10,:].reshape(50,50), cmap = cm.Greys_r)
+	plt.title('Test Sample - $\mu$')
 
 	plt.tight_layout()
-	plt.show()
+	plt.savefig('original_and_adjusted_images.png')
+	plt.close()
 
+def performSVD(_train_data):
+	return np.linalg.svd(_train_data)
 
+def displayEigenfaces(eigenvectors):
+	plt.figure(num=None, figsize=(80, 200), dpi=85, facecolor='w', edgecolor='k')
+	for i in range(10):
+		plt.subplot(5, 2, i+1)
+		plt.imshow(eigenvectors[i,:].reshape(50,50), cmap = cm.Greys_r)
+		if (i == 1):
+			suf = 'st'
+		elif (i == 2):
+			suf = 'nd'
+		elif (i == 3):
+			suf = 'rd'
+		else:
+			suf = 'th'
+		plt.subplots_adjust(top=.8)
+		plt.title(str(i) + suf + ' eigenface', fontsize=20, y=2)
+	plt.savefig('first_ten_eigenfaces.png')
+	plt.close()
+
+def computeRankApprox(U, S, V, r):
+	rankR = U[:, :r].dot(np.diag(S[:r]).dot(V[:r, :]))
+	return rankR
+
+def computeRankApproxErr(U, S, V, train_data):
+	low_rank_errs = []
+	for i in range(1, 201):
+		normalized = np.linalg.norm(train_data - computeRankApprox(U, S, V, i))
+		low_rank_errs.append(normalized)
+	return low_rank_errs
+
+def plotRankApproxErrForRank(low_rank_errs):
+	plt.figure(figsize=(6,4))
+	plt.plot(range(1, 201), low_rank_errs, 'r', linewidth=3)
+	plt.xticks(range(0, 201, 50))
+	plt.title("Low Rank Approximation Error", fontsize=14)
+	plt.xlabel('r', fontsize=14)
+	plt.ylabel('apprx error', fontsize=14)
+	plt.tight_layout()
+	plt.savefig('low_rank_approximation_err.png')
+
+def computeEigenfaceFeature():
+	
+	
+# load train and test data into 1 dimensional arrays
 train_data, train_labels = loadData(train_file)
 test_data, test_labels = loadData(test_file)
+
+# plot a sample from train data
 displayTrainSample(train_data)
+# plot a sample from test data
 displayTestSample(test_data)
-calculateAverageFace()
+
+# calculate and display the average face mu in train data
+mu = calculateAverageFace()
+
+# subtract mu from train and test data
+_train_data = train_data - mu
+_test_data = test_data - mu
+
+# plot original and adjusted samples from train and test data
+displayAdjustedData(train_data, test_data, _train_data, _test_data)
+
+# perform singular value decomposition on adjusted training data to get the eigenvalues and eigenvectors
+U, S, V = performSVD(_train_data)
+
+# display first 10 eigenfaces (eigenvectors in V)
+displayEigenfaces(V)
+
+# compute the low rank approximation errors for r in range 1:200
+low_rank_errs = computeRankApproxErr(U, S, V, train_data)
+# plot the low rank approximation errors as a function of r
+plotRankApproxErrForRank(low_rank_errs)
+
