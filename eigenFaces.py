@@ -2,6 +2,7 @@ import numpy as np
 from scipy import misc
 from matplotlib import pylab as plt
 import matplotlib.cm as cm
+from sklearn.linear_model import LogisticRegression
 
 train_file = './faces/train.txt';
 test_file = './faces/test.txt';
@@ -99,9 +100,30 @@ def plotRankApproxErrForRank(low_rank_errs):
 	plt.tight_layout()
 	plt.savefig('low_rank_approximation_err.png')
 
-def computeEigenfaceFeature():
-	
-	
+def computeEigenfaceFeature(train_data, test_data, V, r):
+	train_eigenface_feature = train_data.dot(V[:r, :].transpose())
+	test_eigenface_feature = test_data.dot(V[:r, :].transpose())
+	return 	train_eigenface_feature, test_eigenface_feature
+
+def trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels):
+	model = LogisticRegression()
+	model.fit(train_ef_feature, train_labels)
+	return model.score(test_ef_feature, test_labels)
+
+def plotClassificationAccuracy(train_data, test_data, V, train_labels, test_labels):
+	accuracies = []
+	for r in range(1, 201):
+		train_ef_feature, test_ef_feature = computeEigenfaceFeature(train_data, test_data, V, r)
+		score = trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels)
+		accuracies.append(score)
+	plt.figure()
+	plt.plot(range(1, 201), np.array(accuracies))
+	plt.xticks(range(0,201,50))
+	plt.xlabel('Face Space')
+	plt.ylabel('Classification Accuracy')
+	plt.title('Classification Accuracy for Multiple Dimensions of Face Space')
+	plt.savefig('face_recognition_classification_accuracy.png')
+
 # load train and test data into 1 dimensional arrays
 train_data, train_labels = loadData(train_file)
 test_data, test_labels = loadData(test_file)
@@ -132,3 +154,5 @@ low_rank_errs = computeRankApproxErr(U, S, V, train_data)
 # plot the low rank approximation errors as a function of r
 plotRankApproxErrForRank(low_rank_errs)
 
+# plot the classification accuracy of face recognition for varying dimensions of face space
+plotClassificationAccuracy(_train_data, _test_data, V, train_labels, test_labels)
