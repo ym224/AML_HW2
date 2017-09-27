@@ -121,10 +121,10 @@ def plotClassificationAccuracy(train_data, test_data, VT, train_labels, test_lab
 		accuracies.append(score)
 	plt.figure()
 	plt.plot(range(1, 201), np.array(accuracies))
-	plt.xticks(range(0,201,50))
-	plt.xlabel('Face Space')
+	plt.xticks(range(0,201,25))
+	plt.xlabel('r')
 	plt.ylabel('Classification Accuracy')
-	plt.title('Classification Accuracy for Multiple Dimensions of Face Space')
+	plt.title('Classification Accuracy for r-dimensions of Face Space')
 	plt.savefig('face_recognition_classification_accuracy.png')
 	plt.close()
 
