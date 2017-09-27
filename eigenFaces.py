@@ -3,6 +3,7 @@ from scipy import misc
 from matplotlib import pylab as plt
 import matplotlib.cm as cm
 from sklearn.linear_model import LogisticRegression
+plt.rcParams.update({'figure.max_open_warning': 0})
 
 train_file = './faces/train.txt';
 test_file = './faces/test.txt';
@@ -62,20 +63,21 @@ def performSVD(_train_data):
 	return np.linalg.svd(_train_data)
 
 def displayEigenfaces(eigenvectors):
-	plt.figure(num=None, figsize=(80, 200), dpi=85, facecolor='w', edgecolor='k')
+	fig = plt.figure(num=None, figsize=(5, 10), dpi=85, facecolor='w', edgecolor='k')
 	for i in range(10):
 		plt.subplot(5, 2, i+1)
 		plt.imshow(eigenvectors[i,:].reshape(50,50), cmap = cm.Greys_r)
-		if (i == 1):
+		if (i + 1 == 1):
 			suf = 'st'
-		elif (i == 2):
+		elif (i + 1 == 2):
 			suf = 'nd'
-		elif (i == 3):
+		elif (i + 1 == 3):
 			suf = 'rd'
 		else:
 			suf = 'th'
-		plt.subplots_adjust(top=.8)
-		plt.title(str(i) + suf + ' eigenface', fontsize=20, y=2)
+		# plt.subplots_adjust(top=1)
+		plt.title(str(i+1) + suf + ' Eigenface', fontsize=10, y=1.05)
+	fig.tight_layout() 
 	plt.savefig('first_ten_eigenfaces.png')
 	plt.close()
 

@@ -122,7 +122,7 @@ We retrieved each image link from the training and testing datasets using the \t
 \subsubsection*{Question 1 (c)}
 \addcontentsline{toc}{subsubsection}{Question 1 (c)}
 
-Using the NumPy\textquotesingle s \textit{mean()} function along the vertical axis of the training dataset pixel matrix, we found the average face $\mu$ and displayed it using the MatPlotLib \textit{imshow()} function. We save the image as \textit{average\_image.png}.
+Using the NumPy\textquotesingle s \textit{mean()} function along the vertical axis of the training dataset pixel matrix, we found the average face $\mu$ and displayed it using the MatPlotLib \textit{imshow()} function. We saved the image as \textit{average\_image.png}.
 
 \begin{figure}[h]
 \centering
@@ -143,14 +143,12 @@ We then subtracted our average face $\mu$\textquotesingle s pixel values from th
 \subsubsection*{Question 1 (e)}
 \addcontentsline{toc}{subsubsection}{Question 1 (e)}
 
-We performed a Singular Value Decomposition (SVD): $X = U\Sigma V^T$ where $X$ is the matrix representation of the adjusted training set. Using NumPy\textquotesingle s \textit{linalg.svd()} function, we computed $U$ (the left-singular vector matrix), $\Sigma$ (the covariance matrix), and $V^T$ (the transpose of the left-singular vectors of X). We then displayed the top ten Eigenfaces as images in grayscale using \textit{imshow()} (see \textit{first\_ten\_eigenfaces.png}).
+We performed a Singular Value Decomposition (SVD): $X = U\Sigma V^T$ where $X$ is the matrix representation of the adjusted training set. Using NumPy\textquotesingle s \textit{linalg.svd()} function, we computed $U$ (the left-singular vector matrix), $\Sigma$ (the covariance matrix), and $V^T$ (the transpose of the left-singular vectors of X). We then displayed the top ten Eigenfaces from $V^T$ as images in grayscale using \textit{imshow()} (see \textit{first\_ten\_eigenfaces.png}).
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.65\linewidth]{original_and_adjusted_images.png}
+\includegraphics[width=0.5\linewidth]{first_ten_eigenfaces.png}
 \end{figure}
-
-[TODO: Fix Plot]
 
 \subsubsection*{Question 1 (f)}
 \addcontentsline{toc}{subsubsection}{Question 1 (f)}
