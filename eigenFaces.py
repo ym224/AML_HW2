@@ -81,14 +81,14 @@ def displayEigenfaces(eigenvectors):
 	plt.savefig('first_ten_eigenfaces.png')
 	plt.close()
 
-def computeRankApprox(U, S, V, r):
-	rankR = U[:, :r].dot(np.diag(S[:r]).dot(V[:r, :]))
+def computeRankApprox(U, S, VT, r):
+	rankR = U[:, :r].dot(np.diag(S[:r]).dot(VT[:r, :]))
 	return rankR
 
-def computeRankApproxErr(U, S, V, train_data):
+def computeRankApproxErr(U, S, VT, train_data):
 	low_rank_errs = []
 	for i in range(1, 201):
-		normalized = np.linalg.norm(train_data - computeRankApprox(U, S, V, i))
+		normalized = np.linalg.norm(train_data - computeRankApprox(U, S, VT, i))
 		low_rank_errs.append(normalized)
 	return low_rank_errs
 
@@ -103,30 +103,30 @@ def plotRankApproxErrForRank(low_rank_errs):
     plt.savefig('low_rank_approximation_err.png')
     plt.close()
 
-def computeEigenfaceFeature(train_data, test_data, V, r):
-	train_eigenface_feature = train_data.dot(V[:r, :].transpose())
-	test_eigenface_feature = test_data.dot(V[:r, :].transpose())
-	return 	train_eigenface_feature, test_eigenface_feature
+def computeEigenfaceFeature(train_data, test_data, VT, r):
+	train_eigenface_feature = train_data.dot(VT[:r, :].transpose())
+	test_eigenface_feature = test_data.dot(VT[:r, :].transpose())
+	return train_eigenface_feature, test_eigenface_feature
 
 def trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels):
 	model = LogisticRegression()
 	model.fit(train_ef_feature, train_labels)
 	return model.score(test_ef_feature, test_labels)
 
-def plotClassificationAccuracy(train_data, test_data, V, train_labels, test_labels):
-    accuracies = []
-    for r in range(1, 201):
-        train_ef_feature, test_ef_feature = computeEigenfaceFeature(train_data, test_data, V, r)
-        score = trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels)
-        accuracies.append(score)
-        plt.figure()
-    plt.plot(range(1, 201), np.array(accuracies))
-    plt.xticks(range(0,201,50))
-    plt.xlabel('Face Space')
-    plt.ylabel('Classification Accuracy')
-    plt.title('Classification Accuracy for Multiple Dimensions of Face Space')
-    plt.savefig('face_recognition_classification_accuracy.png')
-    plt.close()
+def plotClassificationAccuracy(train_data, test_data, VT, train_labels, test_labels):
+	accuracies = []
+	for r in range(1, 201):
+		train_ef_feature, test_ef_feature = computeEigenfaceFeature(train_data, test_data, VT, r)
+		score = trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels)
+		accuracies.append(score)
+	plt.figure()
+	plt.plot(range(1, 201), np.array(accuracies))
+	plt.xticks(range(0,201,50))
+	plt.xlabel('Face Space')
+	plt.ylabel('Classification Accuracy')
+	plt.title('Classification Accuracy for Multiple Dimensions of Face Space')
+	plt.savefig('face_recognition_classification_accuracy.png')
+	plt.close()
 
 # load train and test data into 1 dimensional arrays
 train_data, train_labels = loadData(train_file)
@@ -148,15 +148,20 @@ _test_data = test_data - mu
 displayAdjustedData(train_data, test_data, _train_data, _test_data)
 
 # perform singular value decomposition on adjusted training data to get the eigenvalues and eigenvectors
-U, S, V = performSVD(_train_data)
+U, S, VT = performSVD(_train_data)
 
 # display first 10 eigenfaces (eigenvectors in V)
-displayEigenfaces(V)
+displayEigenfaces(VT)
 
 # compute the low rank approximation errors for r in range 1:200
-low_rank_errs = computeRankApproxErr(U, S, V, _train_data)
+low_rank_errs = computeRankApproxErr(U, S, VT, _train_data)
 # plot the low rank approximation errors as a function of r
 plotRankApproxErrForRank(low_rank_errs)
 
+# extract the eigenfeatures of train and data set for r=10
+train_ef_feature, test_ef_feature = computeEigenfaceFeature(_train_data, _test_data, VT, 10) 
+accuracy_score = trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels)
+print ('accuracy score: ' + str(accuracy_score))
+
 # plot the classification accuracy of face recognition for varying dimensions of face space
-plotClassificationAccuracy(_train_data, _test_data, V, train_labels, test_labels)
+plotClassificationAccuracy(_train_data, _test_data, VT, train_labels, test_labels)
