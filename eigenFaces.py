@@ -150,7 +150,7 @@ U, S, V = performSVD(_train_data)
 displayEigenfaces(V)
 
 # compute the low rank approximation errors for r in range 1:200
-low_rank_errs = computeRankApproxErr(U, S, V, train_data)
+low_rank_errs = computeRankApproxErr(U, S, V, _train_data)
 # plot the low rank approximation errors as a function of r
 plotRankApproxErrForRank(low_rank_errs)
 

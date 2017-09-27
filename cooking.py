@@ -29,14 +29,14 @@ def getAllIngredients(data):
 def transformIngredientsAndLabels(data, ingredients):
 	labelEncoder = LabelEncoder()
 	labels = labelEncoder.fit_transform(data.cuisine)
-	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split('sepearate'))
-	ingredients = map(lambda r: "sepearate".join(r), data.ingredients)
+	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split(','))
+	ingredients = map(lambda r: ",".join(r), data.ingredients)
 	ingredients = enc.fit_transform(ingredients)
 	return ingredients, labels
  
 def transformIngredients(data, ingredients):
-	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split('sepearate'))
-	ingredients = map(lambda r: "sepearate".join(r), data.ingredients)
+	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split(','))
+	ingredients = map(lambda r: ",".join(r), data.ingredients)
 	return enc.fit_transform(ingredients)
 
 def performKFoldBayes(data, labels, prior):
@@ -74,13 +74,11 @@ def saveResults(train_data, test_data, predictions):
 	results = np.column_stack((test_data.id, predictions))
 	print (results)
 	file = open('test_cooking_predictions.csv', 'w')
-	# write header
 	file.write('id,cuisine')
 	for test_id, cuisine in results:
 		file.write('\n')
 		file.write(str(test_id) + ',' + cuisine)
 	file.close()
-	#np.savetext('test_cooking_predictions.csv', results, delimiter=',', fmt='%s', header='id,cuisine')
 
 train_data = load_data(train_file)
 test_data = load_data(test_file)
