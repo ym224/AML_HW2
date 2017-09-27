@@ -1,0 +1,417 @@
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX Template: Project Titlepage Modified (v 0.1) by rcx
+%
+% Original Source: http://www.howtotex.com
+% Date: February 2014
+% 
+% This is a title page template which be used for articles & reports.
+% 
+% This is the modified version of the original Latex template from
+% aforementioned website.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{report}
+\usepackage[a4paper]{geometry}
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\graphicspath{ {images/} }
+
+%-------------------------------------------------------------------------------
+% HEADER & FOOTER
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\setlength\headheight{15pt}
+\fancyhead[L]{Homework 2}
+\fancyhead[R]{CS 5785: Applied Machine Learning}
+\fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\title{ \normalsize \textsc{CS 5785: Applied Machine Learning}
+        \\ [2.0cm]
+        \HRule{0.5pt} \\
+        \LARGE \textbf{\uppercase{Homework 2}}
+        \HRule{2pt} \\ [0.5cm]
+        \normalsize \today \vspace*{5\baselineskip}}
+
+\date{}
+
+\author{
+        Sarah Le Cam - sdl83 \\ 
+        Yunie Mao - ym224 \\ \\
+        Cornell Tech }
+
+\maketitle
+\tableofcontents
+\newpage
+
+%-------------------------------------------------------------------------------
+% Section title formatting
+\sectionfont{\scshape}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% BODY
+%-------------------------------------------------------------------------------
+
+\section*{Eigenface for Face Recognition}
+\addcontentsline{toc}{section}{Eigenface for Face Recognition}
+
+
+\subsection*{Summary}
+\addcontentsline{toc}{subsection}{Summary}
+
+We were given a set of black and white pictures of faces with training and testing data files containing the links to those images and corresponding labels identifying the individuals. Using this data, we calculated the mean image and subtracted it from each of the images in our training set. We then performed a Singular-Value Decomposition to find the set of Eigenfaces. Using our Eigenfaces, we computed the Eigenfeatures and the ranked $r$-dimensional feature vectors for both the training images and test images. Finally, we fitted the Eigenfeatures and labels of our training set to a logistic regression using \textit{scikit-learn}\textquotesingle s logistic regression model. We used this model to find predicted labels for our test data using the Eigenfeatures of the test images and calculated the mean accuracy on the given test data and labels. To visualize the fit of our model, we plotted our classification\textquotesingle s accuracy for the first 200 dimensions in the face space of our test data. 
+\newline
+
+
+\subsection*{Data}
+\addcontentsline{toc}{subsection}{Data}
+
+We were provided with a set of 640 pictures total of 10 distinct subjects and two files - a testing and a training text file - matching each image to its respective label. The training set contained the image links and label pairings for 540 images and the testing set contained 100. Each image is 50 x 50 pixels black and white photograph. In order to use this data for model fitting, we converted the images into grayscale and stored the pixel data in a matrix.
+\newline
+\newpage
+
+
+\subsection*{Procedure \& Insights}
+\addcontentsline{toc}{subsection}{Procedure \& Insights}
+
+\subsubsection*{Question 1 (a)}
+\addcontentsline{toc}{subsubsection}{Question 1 (a)}
+
+We downloaded and unzipped the faces data file. We then used Anaconda Navigator\textquotesingle s Spyder IDE to create a Python project and included our images folder (\textit{faces/images}) and our training and testing data files (\textit{faces/train.txt} \& \textit{faces/test.txt}). We generated a Python file (\textit{eigenFaces.py}) and imported the relevant external libraries (NumPy, SciPy, MatPlotLib and sklearn).
+
+
+\subsubsection*{Question 1 (b)}
+\addcontentsline{toc}{subsubsection}{Question 1 (b)}
+
+We retrieved each image link from the training and testing datasets using the \textit{split()} function. We then computed the images\textquotesingle \ greyscale pixel information using MatPlotLib\textquotesingle s \textit{imread()} and stored the pixel configurations of the training and testing images in two matrices of size, respectively, 540 x 2500 and 100 x 2500. We then displayed a sample image (the 10\textsuperscript{th} in each dataset) using the pixel information stored in each of these matrices using \textit{imshow()}. We saved these the sample image for the training set as \textit{training\_image.png} and that for the testing set as \textit{test\_sample.png}. For both the training and testing datasets, we also extracted the labels from the text files into 2 flat arrays of size 540 (training labels) and 100 (testing labels) using the \textit{split()} function.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=\linewidth]{training_image.png}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+\centering
+\includegraphics[width=\linewidth]{test_image.png}
+\end{subfigure}
+\end{figure}
+
+\subsubsection*{Question 1 (c)}
+\addcontentsline{toc}{subsubsection}{Question 1 (c)}
+
+Using the NumPy\textquotesingle s \textit{mean()} function along the vertical axis of the training dataset pixel matrix, we found the average face $\mu$ and displayed it using the MatPlotLib \textit{imshow()} function. We save the image as \textit{average\_image.png}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\linewidth]{average_image.png}
+\end{figure}
+
+
+\subsubsection*{Question 1 (d)}
+\addcontentsline{toc}{subsubsection}{Question 1 (d)}
+
+We then subtracted our average face $\mu$\textquotesingle s pixel values from those of every image in the training and testing matrices to form new adjusted matrices. These new matrices indicate distance from the mean, allowing us to centralize our data. Again, we displayed a sample (the 10\textsuperscript{th} in each matrix) from each of the new adjusted datasets (see \textit{original\_and\_adjusted\_images.png}).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\linewidth]{original_and_adjusted_images.png}
+\end{figure}
+
+\subsubsection*{Question 1 (e)}
+\addcontentsline{toc}{subsubsection}{Question 1 (e)}
+
+We performed a Singular Value Decomposition (SVD): $X = U\Sigma V^T$ where $X$ is the matrix representation of the adjusted training set. Using NumPy\textquotesingle s \textit{linalg.svd()} function, we computed $U$ (the left-singular vector matrix), $\Sigma$ (the covariance matrix), and $V^T$ (the transpose of the left-singular vectors of X). We then displayed the top ten Eigenfaces as images in grayscale using \textit{imshow()} (see \textit{first\_ten\_eigenfaces.png}).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\linewidth]{original_and_adjusted_images.png}
+\end{figure}
+
+[TODO: Fix Plot]
+
+\subsubsection*{Question 1 (f)}
+\addcontentsline{toc}{subsubsection}{Question 1 (f)}
+
+We generated a helper function to compute the rank-$r$ approximation of our adjusted training data by taking the first $r$ columns of $U$, the first $r$ elements of $\Sigma$ and the first $r$ rows of $V^T$. We then computed the low-rank approximation error of our adjusted training data to the rank-$r$ approximation for $r$ = 1, 2, ..., 200 and plotted the results as a function of the value of $r$ (see \textit{low\_rank\_approximation\_err.png}). As the plot shows, as $r$ increases the approximation error decreases exponentially. A value of only 200 for $r$ corresponds to a relatively low approximation error.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\linewidth]{low_rank_approximation_err.png}
+\end{figure}
+
+
+\subsubsection*{Question 1 (g)}
+\addcontentsline{toc}{subsubsection}{Question 1 (g)}
+
+[TODO]
+
+\subsubsection*{Question 1 (h)}
+\addcontentsline{toc}{subsubsection}{Question 1 (h)}
+
+[TODO]
+\newline
+
+
+\subsection*{Conclusion}
+\addcontentsline{toc}{subsection}{Conclusion}
+
+[TODO]
+
+
+\newpage
+
+
+
+\section*{What\textquotesingle s Cooking?}
+\addcontentsline{toc}{section}{What\textquotesingle s Cooking?}
+
+
+\subsection*{Summary}
+\addcontentsline{toc}{subsection}{Summary}
+
+[TODO] 
+\newline
+
+
+\subsection*{Data}
+\addcontentsline{toc}{subsection}{Data}
+
+[TODO]
+\newline
+
+
+\subsection*{Procedure \& Insights}
+\addcontentsline{toc}{subsection}{Procedure \& Insights}
+
+\subsubsection*{Question 2 (a)}
+\addcontentsline{toc}{subsubsection}{Question 1 (a)}
+
+[TODO]
+
+\subsubsection*{Question 2 (b)}
+\addcontentsline{toc}{subsubsection}{Question 1 (b)}
+
+[TODO]
+
+\subsubsection*{Question 2 (c)}
+\addcontentsline{toc}{subsubsection}{Question 1 (c)}
+
+[TODO]
+
+\subsubsection*{Question 2 (d)}
+\addcontentsline{toc}{subsubsection}{Question 1 (d)}
+
+[TODO]
+
+\subsubsection*{Question 2 (e)}
+\addcontentsline{toc}{subsubsection}{Question 1 (e)}
+
+[TODO]
+
+\subsubsection*{Question 2 (f)}
+\addcontentsline{toc}{subsubsection}{Question 1 (f)}
+
+[TODO]
+
+\subsubsection*{Question 2 (g)}
+\addcontentsline{toc}{subsubsection}{Question 1 (g)}
+
+[TODO]
+\newline
+
+
+\subsection*{Conclusion}
+\addcontentsline{toc}{subsection}{Conclusion}
+
+[TODO]
+
+
+\newpage
+
+
+
+\section*{Written Exercises}
+\addcontentsline{toc}{section}{Written Exercises}
+
+
+\subsection*{Question 1}
+\addcontentsline{toc}{subsection}{Question 1}
+
+[TODO] 
+\newline
+
+
+\subsection*{Question 2}
+\addcontentsline{toc}{subsection}{Question 2}
+
+\subsubsection*{2. a.}
+\addcontentsline{toc}{subsubsection}{2. a.}
+
+[TODO]
+
+\subsubsection*{2. b.}
+\addcontentsline{toc}{subsubsection}{2. b.}
+
+[TODO]
+
+\subsubsection*{2. c.}
+\addcontentsline{toc}{subsubsection}{2. c.}
+
+[TODO]
+
+\subsubsection*{2. d.}
+\addcontentsline{toc}{subsubsection}{2. d.}
+
+[TODO]
+
+\subsubsection*{2. e.}
+\addcontentsline{toc}{subsubsection}{2. e.}
+
+[TODO]
+\newline
+
+
+
+\subsection*{Question 3}
+\addcontentsline{toc}{subsection}{Question 3}
+
+\subsubsection*{3. a.}
+\addcontentsline{toc}{subsubsection}{2. a.}
+
+[TODO]
+
+\subsubsection*{3. b.}
+\addcontentsline{toc}{subsubsection}{2. b.}
+
+[TODO]
+
+\subsubsection*{3. c.}
+\addcontentsline{toc}{subsubsection}{2. c.}
+
+[TODO]
+
+\subsubsection*{3. d.}
+\addcontentsline{toc}{subsubsection}{2. d.}
+
+[TODO]
+
+\subsubsection*{3. e.}
+\addcontentsline{toc}{subsubsection}{2. e.}
+
+[TODO]
+\newline
+
+
+%-------------------------------------------------------------------------------
+% REFERENCES
+%-------------------------------------------------------------------------------
+\newpage
+\section*{Sources \& External libraries}
+\addcontentsline{toc}{section}{Sources \& External libraries}
+
+Stéfan van der Walt, S. Chris Colbert and Gaël Varoquaux. \textit{The NumPy Array: A Structure for Efficient Numerical Computation}, Computing in Science \& Engineering, 13, 22-30 (2011), DOI:10.1109/MCSE.2011.37
+\newline
+\newline
+John D. Hunter. \textit{Matplotlib: A 2D Graphics Environment}, Computing in Science \& Engineering, 9, 90-95 (2007), DOI:10.1109/MCSE.2007.55
+\newline
+\newline
+
+Jones E, Oliphant E, Peterson P, et al. \textit{SciPy: Open Source Scientific Tools for Python}, 2001-, \url{http://www.scipy.org/}
+\newline
+\newline
+
+Fabian Pedregosa, Gaël Varoquaux, Alexandre Gramfort, Vincent Michel, Bertrand Thirion, Olivier Grisel, Mathieu Blondel, Peter Prettenhofer, Ron Weiss, Vincent Dubourg, Jake Vanderplas, Alexandre Passos, David Cournapeau, Matthieu Brucher, Matthieu Perrot, Édouard Duchesnay. \textit{Scikit-learn: Machine Learning in Python}, Journal of Machine Learning Research, 12, 2825-2830 (2011)
+\newline
+\newline
+
+Wes McKinney. \textit{Data Structures for Statistical Computing in Python}, Proceedings of the 9th Python in Science Conference, 51-56 (2010)
+\newline
+\newline
+
+\end{document}
+
+%-------------------------------------------------------------------------------
+% SNIPPETS
+%-------------------------------------------------------------------------------
+
+%\begin{figure}[!ht]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{file_name}
+%   \caption{}
+%   \centering
+%   \label{label:file_name}
+%\end{figure}
+
+%\begin{figure}[!ht]
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{graph}
+%   \caption{Blood pressure ranges and associated level of hypertension (American Heart Association, 2013).}
+%   \centering
+%   \label{label:graph}
+%\end{figure}
+
+%\begin{wrapfigure}{r}{0.30\textwidth}
+%   \vspace{-40pt}
+%   \begin{center}
+%       \includegraphics[width=0.29\textwidth]{file_name}
+%   \end{center}
+%   \vspace{-20pt}
+%   \caption{}
+%   \label{label:file_name}
+%\end{wrapfigure}
+
+%\begin{wrapfigure}{r}{0.45\textwidth}
+%   \begin{center}
+%       \includegraphics[width=0.29\textwidth]{manometer}
+%   \end{center}
+%   \caption{Aneroid sphygmomanometer with stethoscope (Medicalexpo, 2012).}
+%   \label{label:manometer}
+%\end{wrapfigure}
+
+%\begin{table}[!ht]\footnotesize
+%   \centering
+%   \begin{tabular}{cccccc}
+%   \toprule
+%   \multicolumn{2}{c} {Pearson's correlation test} & \multicolumn{4}{c} {Independent t-test} \\
+%   \midrule    
+%   \multicolumn{2}{c} {Gender} & \multicolumn{2}{c} {Activity level} & \multicolumn{2}{c} {Gender} \\
+%   \midrule
+%   Males & Females & 1st level & 6th level & Males & Females \\
+%   \midrule
+%   \multicolumn{2}{c} {BMI vs. SP} & \multicolumn{2}{c} {Systolic pressure} & \multicolumn{2}{c} {Systolic Pressure} \\
+%   \multicolumn{2}{c} {BMI vs. DP} & \multicolumn{2}{c} {Diastolic pressure} & \multicolumn{2}{c} {Diastolic pressure} \\
+%   \multicolumn{2}{c} {BMI vs. MAP} & \multicolumn{2}{c} {MAP} & \multicolumn{2}{c} {MAP} \\
+%   \multicolumn{2}{c} {W:H ratio vs. SP} & \multicolumn{2}{c} {BMI} & \multicolumn{2}{c} {BMI} \\
+%   \multicolumn{2}{c} {W:H ratio vs. DP} & \multicolumn{2}{c} {W:H ratio} & \multicolumn{2}{c} {W:H ratio} \\
+%   \multicolumn{2}{c} {W:H ratio vs. MAP} & \multicolumn{2}{c} {\% Body fat} & \multicolumn{2}{c} {\% Body fat} \\
+%   \multicolumn{2}{c} {} & \multicolumn{2}{c} {Height} & \multicolumn{2}{c} {Height} \\
+%   \multicolumn{2}{c} {} & \multicolumn{2}{c} {Weight} & \multicolumn{2}{c} {Weight} \\
+%   \multicolumn{2}{c} {} & \multicolumn{2}{c} {Heart rate} & \multicolumn{2}{c} {Heart rate} \\
+%   \bottomrule
+%   \end{tabular}
+%   \caption{Parameters that were analysed and related statistical test performed for current study. BMI - body mass index; SP - systolic pressure; DP - diastolic pressure; MAP - mean arterial pressure; W:H ratio - waist to hip ratio.}
+%   \label{label:tests}
+%\end{table}

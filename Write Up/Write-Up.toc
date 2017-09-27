@@ -1,0 +1,41 @@
+\select@language {english}
+\contentsline {section}{Eigenface for Face Recognition}{3}
+\contentsline {subsection}{Summary}{3}
+\contentsline {subsection}{Data}{3}
+\contentsline {subsection}{Procedure \& Insights}{4}
+\contentsline {subsubsection}{Question 1 (a)}{4}
+\contentsline {subsubsection}{Question 1 (b)}{4}
+\contentsline {subsubsection}{Question 1 (c)}{4}
+\contentsline {subsubsection}{Question 1 (d)}{5}
+\contentsline {subsubsection}{Question 1 (e)}{6}
+\contentsline {subsubsection}{Question 1 (f)}{6}
+\contentsline {subsubsection}{Question 1 (g)}{6}
+\contentsline {subsubsection}{Question 1 (h)}{7}
+\contentsline {subsection}{Conclusion}{7}
+\contentsline {section}{What\textquotesingle s Cooking?}{8}
+\contentsline {subsection}{Summary}{8}
+\contentsline {subsection}{Data}{8}
+\contentsline {subsection}{Procedure \& Insights}{8}
+\contentsline {subsubsection}{Question 1 (a)}{8}
+\contentsline {subsubsection}{Question 1 (b)}{8}
+\contentsline {subsubsection}{Question 1 (c)}{8}
+\contentsline {subsubsection}{Question 1 (d)}{8}
+\contentsline {subsubsection}{Question 1 (e)}{8}
+\contentsline {subsubsection}{Question 1 (f)}{8}
+\contentsline {subsubsection}{Question 1 (g)}{9}
+\contentsline {subsection}{Conclusion}{9}
+\contentsline {section}{Written Exercises}{10}
+\contentsline {subsection}{Question 1}{10}
+\contentsline {subsection}{Question 2}{10}
+\contentsline {subsubsection}{2. a.}{10}
+\contentsline {subsubsection}{2. b.}{10}
+\contentsline {subsubsection}{2. c.}{10}
+\contentsline {subsubsection}{2. d.}{10}
+\contentsline {subsubsection}{2. e.}{10}
+\contentsline {subsection}{Question 3}{10}
+\contentsline {subsubsection}{2. a.}{10}
+\contentsline {subsubsection}{2. b.}{10}
+\contentsline {subsubsection}{2. c.}{11}
+\contentsline {subsubsection}{2. d.}{11}
+\contentsline {subsubsection}{2. e.}{11}
+\contentsline {section}{Sources \& External libraries}{12}

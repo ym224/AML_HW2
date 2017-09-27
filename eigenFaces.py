@@ -91,14 +91,15 @@ def computeRankApproxErr(U, S, V, train_data):
 	return low_rank_errs
 
 def plotRankApproxErrForRank(low_rank_errs):
-	plt.figure(figsize=(6,4))
-	plt.plot(range(1, 201), low_rank_errs, 'r', linewidth=3)
-	plt.xticks(range(0, 201, 50))
-	plt.title("Low Rank Approximation Error", fontsize=14)
-	plt.xlabel('r', fontsize=14)
-	plt.ylabel('apprx error', fontsize=14)
-	plt.tight_layout()
-	plt.savefig('low_rank_approximation_err.png')
+    plt.figure(figsize=(6,4))
+    plt.plot(range(1, 201), low_rank_errs, 'r', linewidth=2, color = "#0a306d")
+    plt.xticks(range(0, 201, 50))
+    plt.title("Rank-r Approximation Error", fontsize=14)
+    plt.xlabel('r', fontsize=12)
+    plt.ylabel('Approximation Error', fontsize=12)
+    plt.tight_layout()
+    plt.savefig('low_rank_approximation_err.png')
+    plt.close()
 
 def computeEigenfaceFeature(train_data, test_data, V, r):
 	train_eigenface_feature = train_data.dot(V[:r, :].transpose())
@@ -111,18 +112,19 @@ def trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, tes
 	return model.score(test_ef_feature, test_labels)
 
 def plotClassificationAccuracy(train_data, test_data, V, train_labels, test_labels):
-	accuracies = []
-	for r in range(1, 201):
-		train_ef_feature, test_ef_feature = computeEigenfaceFeature(train_data, test_data, V, r)
-		score = trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels)
-		accuracies.append(score)
-	plt.figure()
-	plt.plot(range(1, 201), np.array(accuracies))
-	plt.xticks(range(0,201,50))
-	plt.xlabel('Face Space')
-	plt.ylabel('Classification Accuracy')
-	plt.title('Classification Accuracy for Multiple Dimensions of Face Space')
-	plt.savefig('face_recognition_classification_accuracy.png')
+    accuracies = []
+    for r in range(1, 201):
+        train_ef_feature, test_ef_feature = computeEigenfaceFeature(train_data, test_data, V, r)
+        score = trainLogisticRegression(train_ef_feature, test_ef_feature, train_labels, test_labels)
+        accuracies.append(score)
+        plt.figure()
+    plt.plot(range(1, 201), np.array(accuracies))
+    plt.xticks(range(0,201,50))
+    plt.xlabel('Face Space')
+    plt.ylabel('Classification Accuracy')
+    plt.title('Classification Accuracy for Multiple Dimensions of Face Space')
+    plt.savefig('face_recognition_classification_accuracy.png')
+    plt.close()
 
 # load train and test data into 1 dimensional arrays
 train_data, train_labels = loadData(train_file)
