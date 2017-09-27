@@ -28,15 +28,16 @@ def getAllIngredients(data):
 
 def transformIngredientsAndLabels(data, ingredients):
 	labelEncoder = LabelEncoder()
+	# use label encoder to fit and transform cuisine labels into numerical values
 	labels = labelEncoder.fit_transform(data.cuisine)
-	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split(','))
-	ingredients = map(lambda r: ",".join(r), data.ingredients)
+	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split('.'))
+	ingredients = map(lambda r: ".".join(r), data.ingredients)
 	ingredients = enc.fit_transform(ingredients)
 	return ingredients, labels
  
 def transformIngredients(data, ingredients):
-	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split(','))
-	ingredients = map(lambda r: ",".join(r), data.ingredients)
+	enc = CountVectorizer(vocabulary=ingredients, tokenizer=lambda x : x.split('.'))
+	ingredients = map(lambda r: ".".join(r), data.ingredients)
 	return enc.fit_transform(ingredients)
 
 def performKFoldBayes(data, labels, prior):
@@ -72,7 +73,6 @@ def saveResults(train_data, test_data, predictions):
 	labelEncoder.fit(train_data.cuisine)
 	predictions = labelEncoder.inverse_transform(predictions)
 	results = np.column_stack((test_data.id, predictions))
-	print (results)
 	file = open('test_cooking_predictions.csv', 'w')
 	file.write('id,cuisine')
 	for test_id, cuisine in results:
@@ -85,6 +85,9 @@ test_data = load_data(test_file)
 sampleSize, categorySize = getSamplesAndCategories(train_data)
 # 39774 samples and 20 categories
 ingredients = getAllIngredients(train_data)
+# 6714 unique ingredients
+print (len(ingredients))
+
 train_ingredients, train_labels = transformIngredientsAndLabels(train_data, ingredients)
 print (train_ingredients.shape, train_labels.shape)
 # perform K fold with Naiive Bayes Classifier with Bernoulli prior
