@@ -164,19 +164,20 @@ We generated a helper function to compute the rank-$r$ approximation of our adju
 \subsubsection*{Question 1 (g)}
 \addcontentsline{toc}{subsubsection}{Question 1 (g)}
 
-[TODO]
+Since the first $r$ Eigenfaces span the $r$-dimensional subspace of the original image space (\textit{face space}), we can represent a 2500-dimensional face image as an $r$-dimensional feature vector and thereby reduce the dimensions prior to classification. To compute the $r$-dimensional feature matrices for the training and test images, we multiplied these images by the transpose of the first $r$ rows of $V^T$.  
+
 
 \subsubsection*{Question 1 (h)}
 \addcontentsline{toc}{subsubsection}{Question 1 (h)}
 
-[TODO]
-\newline
+Using the function we generated in 1(g), we extracted the Eigenfeatures for our training and test data for $r$ = 10. We then fitted our training Eigenfeatures into a logistic regression model provided by scikit-learn and used the model to generate predicted labels for the test data. We then computed the classification accuracy rate on the test data given the Eigenfeatures and labels. We achieved a classification accuracy of 79\%.
 
+To show the classification rate on the test data as a function of $r$, we generated the Eigenfeatures, trained a logistic regression model, and computed the accuracy rate on our test set for the first 200 values of $r$. The following plot (\textit{face\_recognition\_classification\_accuracy.png}) shows the classification accuracy for varying $r$-dimensions. We can see that for values of $r > 30$, we achieve a classification accuracy of 90\%.
 
-\subsection*{Conclusion}
-\addcontentsline{toc}{subsection}{Conclusion}
-
-[TODO]
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{face_recognition_classification_accuracy.png}
+\end{figure}
 
 
 \newpage
@@ -190,6 +191,13 @@ We generated a helper function to compute the rank-$r$ approximation of our adju
 \subsection*{Summary}
 \addcontentsline{toc}{subsection}{Summary}
 
+We were given descriptive information of many different dishes for training and testing purposes. 
+\newline
+[Our goal was to find the best possible method for classifying recipes by cuisine when given their respective ingredients]. 
+\newline
+We first transformed the data into a usable numeric matrix, then
+\newline
+
 [TODO] 
 \newline
 
@@ -197,8 +205,10 @@ We generated a helper function to compute the rank-$r$ approximation of our adju
 \subsection*{Data}
 \addcontentsline{toc}{subsection}{Data}
 
-[TODO]
+The Kaggle competition provided us with training and testing json files containing information describing recipes. Both datasets contained recipe identifiers and ingredients lists. The training dataset included an addition cuisine field. The training file included 39,774 dishes with 20 categories and 6,714 unique ingredients. The testing file included 9,944 dishes with 4,484 unique ingredients.
 \newline
+
+\newpage
 
 
 \subsection*{Procedure \& Insights}
@@ -207,45 +217,53 @@ We generated a helper function to compute the rank-$r$ approximation of our adju
 \subsubsection*{Question 2 (a)}
 \addcontentsline{toc}{subsubsection}{Question 1 (a)}
 
-[TODO]
+We joined the Kaggle "What's Cooking?" competition and downloaded the training (\textit{train.json}) and testing (\textit{test.json}) data files. We then used Anaconda Navigator\textquotesingle s Spyder IDE to create a Python project and included these files. We generated a Python file (\textit{cooking.py}) and imported the relevant external libraries (NumPy, Pandas, IterTools, MatPlotLib and sklearn).
 
 \subsubsection*{Question 2 (b)}
 \addcontentsline{toc}{subsubsection}{Question 1 (b)}
 
-[TODO]
+We used Pandas\textquotesingle DataFrame to import the json data and find the number of distinct dishes and cuisines. The training file includes 39,774 dishes spanning 20 categories. We then used an encoder to extract the information from the lists contained in each data object. There 6,714 unique ingredients included in total in the training set.
 
 \subsubsection*{Question 2 (c)}
 \addcontentsline{toc}{subsubsection}{Question 1 (c)}
+
+To set up our training set for classification, we generated an n x d matrix, where n is the number of dish samples and d is the total number of unique ingredients for both the training (39,774 x 6,714) and testing (39,774 x 6,714) datasets. We represented each dish as a binary ingredient vector x, where $x\textsubscript{i} = 1$ if the dish contains ingredient i and $x\textsubscript{i} = 0$ otherwise. To do this, we used scikit-learn?s CountVectorizer function to generate a map of the ingredient to its frequency for each dish. We then fitted and transformed the ingredients and the labels into numerical vectors based on the non-numerical values. 	
 
 [TODO]
 
 \subsubsection*{Question 2 (d)}
 \addcontentsline{toc}{subsubsection}{Question 1 (d)}
 
+Using scikit-learn?s Naive Bayes Classifier, we performed a 3 fold cross-validation on the training data with the Bernoulli distribution prior and the Gaussian distribution prior assumptions. We achieved an average accuracy rate of 68.2\% using the Bernoulli Naive Bayes Classifier and 36.9\% using the Gaussian Naive Bayes Classifier.
 [TODO]
 
 \subsubsection*{Question 2 (e)}
 \addcontentsline{toc}{subsubsection}{Question 1 (e)}
+
+The Bernoulli Naive Bayes Classifier performed much better than the Gaussian Naive Bayes Classifier. This makes sense because we represented each dish as a binary ingredient vector x in our training data. The Bernoulli Naive Bayes best fits our assumptions because it describes whether or not an ingredient was found in a dish while the Gaussian Naive Bayes Classifier generally describes continuous data that are normally distributed.
 
 [TODO]
 
 \subsubsection*{Question 2 (f)}
 \addcontentsline{toc}{subsubsection}{Question 1 (f)}
 
+We performed a 3 fold cross-validation on the training data using scikit-learn?s Logistic Regression model. We achieved an average classification accuracy of 77.5\%.
+
 [TODO]
 
 \subsubsection*{Question 2 (g)}
 \addcontentsline{toc}{subsubsection}{Question 1 (g)}
 
+Based on the results from 1(d) and 1(f), the Logistic Regression model had the best accuracy performance over our training data. Using this model, we classified the cuisines based on the dish ingredients in our test data. We generated a csv file that contained the list of dish ids and their corresponding predicted cuisine labels. After submitting our results to Kaggle, we received an accuracy rate of 78.177 \%.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{submission.png}
+\end{figure}
+
+
 [TODO]
 \newline
-
-
-\subsection*{Conclusion}
-\addcontentsline{toc}{subsection}{Conclusion}
-
-[TODO]
-
 
 \newpage
 
@@ -346,6 +364,10 @@ Fabian Pedregosa, Gaël Varoquaux, Alexandre Gramfort, Vincent Michel, Bertrand T
 \newline
 
 Wes McKinney. \textit{Data Structures for Statistical Computing in Python}, Proceedings of the 9th Python in Science Conference, 51-56 (2010)
+\newline
+\newline
+
+What's Cooking? | Kaggle, www.kaggle.com/c/whats-cooking. 
 \newline
 \newline
 

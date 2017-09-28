@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  27 SEP 2017 17:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  27 SEP 2017 20:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -600,7 +600,7 @@ LaTeX Font Info:    Font shape `U/futm/m/n' will be
 (Font)              scaled to size 8.27998pt on input line 2.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
 (Font)              scaled to size 6.43999pt on input line 2.
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 15.
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 14.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/fourier/ts1futs.fd
@@ -684,70 +684,85 @@ File: images/low_rank_approximation_err.png Graphic file (type png)
 Package pdftex.def Info: images/low_rank_approximation_err.png used on input li
 ne 160.
 (pdftex.def)             Requested size: 339.72592pt x 226.49602pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 172--174
-
- []
-
-[7 <./images/low_rank_approximation_err.png>]
+ [7 <./images/low_rank_approximation_err.png>]
+<images/face_recognition_classification_accuracy.png, id=47, 462.528pt x 346.89
+6pt>
+File: images/face_recognition_classification_accuracy.png Graphic file (type pn
+g)
+ <use images/face_recognition_classification_accuracy.png>
+Package pdftex.def Info: images/face_recognition_classification_accuracy.png us
+ed on input line 179.
+(pdftex.def)             Requested size: 452.9679pt x 339.74402pt.
+ [8 <./images/face_recognition_classification_accuracy.png>]
 
 LaTeX Font Warning: Font shape `TS1/futs/bx/sc' undefined
 (Font)              using `TS1/futs/bx/n' instead
-(Font)              for symbol `textquotesingle' on input line 186.
+(Font)              for symbol `textquotesingle' on input line 187.
 
 LaTeX Font Info:    Font shape `TS1/futs/bx/n' in size <17.28> not available
-(Font)              Font shape `TS1/futs/b/n' tried instead on input line 186.
+(Font)              Font shape `TS1/futs/b/n' tried instead on input line 187.
 
-Underfull \hbox (badness 10000) in paragraph at lines 193--195
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 200--202
+Underfull \hbox (badness 10000) in paragraph at lines 194--200
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 240--242
-
- []
-
-[8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 261--263
+Underfull \hbox (badness 10000) in paragraph at lines 201--203
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--293
+Underfull \hbox (badness 10000) in paragraph at lines 208--210
 
  []
 
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 322--324
+[9] [10] <images/submission.png, id=58, 951.555pt x 197.73875pt>
+File: images/submission.png Graphic file (type png)
+
+<use images/submission.png>
+Package pdftex.def Info: images/submission.png used on input line 261.
+(pdftex.def)             Requested size: 452.9679pt x 94.12903pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--267
 
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 333--336
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 333--336
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 337--340
+[11 <./images/submission.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 279--281
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 337--340
+Underfull \hbox (badness 10000) in paragraph at lines 309--311
 
  []
 
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 341.
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 340--342
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 351--354
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 351--354
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--358
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--358
+
+ []
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 359.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
@@ -757,48 +772,58 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--344
+Underfull \hbox (badness 10000) in paragraph at lines 359--362
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--344
+Underfull \hbox (badness 10000) in paragraph at lines 359--362
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--348
+Underfull \hbox (badness 10000) in paragraph at lines 363--366
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--348
+Underfull \hbox (badness 10000) in paragraph at lines 363--366
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 349--352
+Underfull \hbox (badness 10000) in paragraph at lines 367--370
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 349--352
+Underfull \hbox (badness 10000) in paragraph at lines 367--370
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 371--374
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 371--374
 
  []
 
 
 AED: lastpage setting LastPage
-[12] (./Write-Up.aux)
+[14] (./Write-Up.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 6872 strings out of 493014
- 107071 string characters out of 6133351
+ 6934 strings out of 493014
+ 107977 string characters out of 6133351
  299163 words of memory out of 5000000
- 10084 multiletter control sequences out of 15000+600000
- 117711 words of font info for 212 fonts, out of 8000000 for 9000
+ 10092 multiletter control sequences out of 15000+600000
+ 121599 words of font info for 251 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,10n,43p,1071b,378s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -810,10 +835,10 @@ ive/2016/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb></usr/local/texlive/201
 6/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texlive/2016/texmf
 -dist/fonts/type1/adobe/utopia/putri8a.pfb></usr/local/texlive/2016/texmf-dist/
 fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on Write-Up.pdf (13 pages, 267394 bytes).
+Output written on Write-Up.pdf (15 pages, 311350 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 100 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 34335 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 34345 words of extra memory for PDF output out of 35830 (max. 10000000)
 
