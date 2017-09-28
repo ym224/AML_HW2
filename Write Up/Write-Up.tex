@@ -191,23 +191,14 @@ To show the classification rate on the test data as a function of $r$, we genera
 \subsection*{Summary}
 \addcontentsline{toc}{subsection}{Summary}
 
-We were given descriptive information of many different dishes for training and testing purposes. 
+We were given descriptive information of many different dishes for training and testing purposes. Our goal was to find the best possible method for classifying recipes by cuisine when given their respective ingredients. We first transformed the data into a usable numeric matrix, then performed multiple classification attempts using different methods. We found that the logistic regression model worked best.
 \newline
-[Our goal was to find the best possible method for classifying recipes by cuisine when given their respective ingredients]. 
-\newline
-We first transformed the data into a usable numeric matrix, then
-\newline
-
-[TODO] 
-\newline
-
 
 \subsection*{Data}
 \addcontentsline{toc}{subsection}{Data}
 
 The Kaggle competition provided us with training and testing json files containing information describing recipes. Both datasets contained recipe identifiers and ingredients lists. The training dataset included an addition cuisine field. The training file included 39,774 dishes with 20 categories and 6,714 unique ingredients. The testing file included 9,944 dishes with 4,484 unique ingredients.
 \newline
-
 \newpage
 
 
@@ -222,123 +213,40 @@ We joined the Kaggle "What's Cooking?" competition and downloaded the training (
 \subsubsection*{Question 2 (b)}
 \addcontentsline{toc}{subsubsection}{Question 1 (b)}
 
-We used Pandas\textquotesingle DataFrame to import the json data and find the number of distinct dishes and cuisines. The training file includes 39,774 dishes spanning 20 categories. We then used an encoder to extract the information from the lists contained in each data object. There 6,714 unique ingredients included in total in the training set.
+We used Pandas\textquotesingle\ DataFrame to import the json data and find the number of distinct dishes and cuisines. The training file includes 39,774 dishes spanning 20 categories. We then used an iterable function to extract the ingredient information from the lists contained in each data object. There were 6,714 unique ingredients included in total in the training set.
 
 \subsubsection*{Question 2 (c)}
 \addcontentsline{toc}{subsubsection}{Question 1 (c)}
 
-To set up our training set for classification, we generated an n x d matrix, where n is the number of dish samples and d is the total number of unique ingredients for both the training (39,774 x 6,714) and testing (39,774 x 6,714) datasets. We represented each dish as a binary ingredient vector x, where $x\textsubscript{i} = 1$ if the dish contains ingredient i and $x\textsubscript{i} = 0$ otherwise. To do this, we used scikit-learn?s CountVectorizer function to generate a map of the ingredient to its frequency for each dish. We then fitted and transformed the ingredients and the labels into numerical vectors based on the non-numerical values. 	
-
-[TODO]
+To set up our training set for classification, we generated an $n$ x $d$ matrix, where $n$ is the number of dish samples and $d$ is the total number of unique ingredients for both the training (39,774 x 6,714 matrix) and testing (39,774 x 6,714 matrix) datasets. We represented each dish as a binary ingredient vector $x$, where $x\textsubscript{i} = 1$ if the dish contains ingredient $i$ and $x\textsubscript{i} = 0$ otherwise. This allows us to have a numeric representation of the dish composition for model fitting and predictions based on the non-numerical databases. To generate these matrices, we used an encoder and scikit-learn\textquotesingle s \textit{CountVectorizer()} function to generate a map of the ingredients to their frequency in each dish.
 
 \subsubsection*{Question 2 (d)}
 \addcontentsline{toc}{subsubsection}{Question 1 (d)}
 
-Using scikit-learn?s Naive Bayes Classifier, we performed a 3 fold cross-validation on the training data with the Bernoulli distribution prior and the Gaussian distribution prior assumptions. We achieved an average accuracy rate of 68.2\% using the Bernoulli Naive Bayes Classifier and 36.9\% using the Gaussian Naive Bayes Classifier.
-[TODO]
+Using scikit-learn\textquotesingle s Naive Bayes Classifier, we performed a 3 fold cross-validation on the training data with the Bernoulli distribution prior and the Gaussian distribution prior assumptions. We achieved an average accuracy rate of 68.2\% using the Bernoulli Naive Bayes Classifier and 36.9\% using the Gaussian Naive Bayes Classifier.
 
 \subsubsection*{Question 2 (e)}
 \addcontentsline{toc}{subsubsection}{Question 1 (e)}
 
-The Bernoulli Naive Bayes Classifier performed much better than the Gaussian Naive Bayes Classifier. This makes sense because we represented each dish as a binary ingredient vector x in our training data. The Bernoulli Naive Bayes best fits our assumptions because it describes whether or not an ingredient was found in a dish while the Gaussian Naive Bayes Classifier generally describes continuous data that are normally distributed.
+The Bernoulli Naive Bayes Classifier performed much better than the Gaussian Naive Bayes Classifier. This makes sense because we represented each dish as a binary ingredient vector $x$ in our training data. The Bernoulli Naive Bayes best fits our assumptions because it describes whether or not an ingredient was found in a dish while the Gaussian Naive Bayes Classifier is generally used to describe continuous data that is normally distributed.
 
-[TODO]
 
 \subsubsection*{Question 2 (f)}
 \addcontentsline{toc}{subsubsection}{Question 1 (f)}
 
-We performed a 3 fold cross-validation on the training data using scikit-learn?s Logistic Regression model. We achieved an average classification accuracy of 77.5\%.
-
-[TODO]
+We performed a 3 fold cross-validation on the training data using scikit-learn\textquotesingle s Logistic Regression model. We achieved an average classification accuracy of 77.5\%.
 
 \subsubsection*{Question 2 (g)}
 \addcontentsline{toc}{subsubsection}{Question 1 (g)}
 
-Based on the results from 1(d) and 1(f), the Logistic Regression model had the best accuracy performance over our training data. Using this model, we classified the cuisines based on the dish ingredients in our test data. We generated a csv file that contained the list of dish ids and their corresponding predicted cuisine labels. After submitting our results to Kaggle, we received an accuracy rate of 78.177 \%.
+Based on the results from 1(d) and 1(f), the Logistic Regression model had the best accuracy performance over our training data. Using this model, we classified the cuisines based on the dish ingredients in our test data. We generated a csv file that contained the list of dish ids and their corresponding predicted cuisine labels. After submitting our results to Kaggle, we received an accuracy rate of 78.177\%.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{submission.png}
 \end{figure}
 
-
-[TODO]
-\newline
-
 \newpage
-
-
-
-\section*{Written Exercises}
-\addcontentsline{toc}{section}{Written Exercises}
-
-
-\subsection*{Question 1}
-\addcontentsline{toc}{subsection}{Question 1}
-
-[TODO] 
-\newline
-
-
-\subsection*{Question 2}
-\addcontentsline{toc}{subsection}{Question 2}
-
-\subsubsection*{2. a.}
-\addcontentsline{toc}{subsubsection}{2. a.}
-
-[TODO]
-
-\subsubsection*{2. b.}
-\addcontentsline{toc}{subsubsection}{2. b.}
-
-[TODO]
-
-\subsubsection*{2. c.}
-\addcontentsline{toc}{subsubsection}{2. c.}
-
-[TODO]
-
-\subsubsection*{2. d.}
-\addcontentsline{toc}{subsubsection}{2. d.}
-
-[TODO]
-
-\subsubsection*{2. e.}
-\addcontentsline{toc}{subsubsection}{2. e.}
-
-[TODO]
-\newline
-
-
-
-\subsection*{Question 3}
-\addcontentsline{toc}{subsection}{Question 3}
-
-\subsubsection*{3. a.}
-\addcontentsline{toc}{subsubsection}{2. a.}
-
-[TODO]
-
-\subsubsection*{3. b.}
-\addcontentsline{toc}{subsubsection}{2. b.}
-
-[TODO]
-
-\subsubsection*{3. c.}
-\addcontentsline{toc}{subsubsection}{2. c.}
-
-[TODO]
-
-\subsubsection*{3. d.}
-\addcontentsline{toc}{subsubsection}{2. d.}
-
-[TODO]
-
-\subsubsection*{3. e.}
-\addcontentsline{toc}{subsubsection}{2. e.}
-
-[TODO]
-\newline
 
 
 %-------------------------------------------------------------------------------
@@ -367,7 +275,7 @@ Wes McKinney. \textit{Data Structures for Statistical Computing in Python}, Proc
 \newline
 \newline
 
-What's Cooking? | Kaggle, www.kaggle.com/c/whats-cooking. 
+\textit{What's Cooking?} | Kaggle, www.kaggle.com/c/whats-cooking. 
 \newline
 \newline
 
